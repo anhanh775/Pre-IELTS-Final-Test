@@ -1,6 +1,6 @@
 /* ===== CẤU HÌNH ===== */
 const CONFIG = {
-  webhook: "PASTE_YOUR_WEB_APP_URL_HERE",   // dán URL Web App của Apps Script (xem README)
+  webhook: "https://script.google.com/macros/s/AKfycbyRCWFczX_MRzmggGFo-f6jRzy1oDNAJvzoO0ZkUBJajT48ntYMBNVaP_iLqvUnnx5D/exec",   // dán URL Web App của Apps Script (xem README)
   teacherPassword: "gv2026",         // mật khẩu trang giáo viên
   storagePrefix: "pre-ielts-final-lrw:",
   readingMinutes: 60,                // Reading 60 phút
