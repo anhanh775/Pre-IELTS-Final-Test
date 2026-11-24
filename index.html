@@ -77,8 +77,10 @@
 
   <div id="navbarListening">
     <span class="info" id="navInfoListening">Audio đang phát — bạn có thể điền đáp án trong lúc nghe.</span>
-    <div class="spacer"></div>
-    <button class="btn" id="submitBtnListening" onclick="submitListening()" disabled>Đợi hết audio để nộp bài</button>
+    <div class="navCenter">
+      <button class="btn big" id="submitBtnListening" onclick="submitListening()" disabled>Đợi hết audio để nộp bài</button>
+    </div>
+    <div class="navRight"></div>
   </div>
 
 </div>
@@ -113,8 +115,8 @@
     <div class="navGroup" id="navGroup1"></div>
     <div class="navGroup" id="navGroup2"></div>
     <div class="navGroup" id="navGroup3"></div>
-    <div class="spacer"></div>
-    <button class="btn" onclick="submitReading()">Submit &amp; continue to Writing</button>
+    <div class="navBreak"></div>
+    <button class="btn big" onclick="submitReading()">Submit &amp; continue to Writing</button>
   </div>
 
   <div id="notepad">
@@ -180,7 +182,7 @@
     <div class="navCenter">
       <button class="btn secondary" id="backToTask1Btn" style="display:none" onclick="switchTask(1)">← Task 1</button>
       <button class="btn big" id="nextTaskBtn" onclick="switchTask(2)">Next: Task 2 →</button>
-      <button class="btn big submit" id="submitWritingBtn" style="display:none" onclick="confirmSubmitWriting()">Submit test</button>
+      <button class="btn big" id="submitWritingBtn" style="display:none" onclick="confirmSubmitWriting()">Submit test</button>
     </div>
     <div class="navRight"></div>
   </div>

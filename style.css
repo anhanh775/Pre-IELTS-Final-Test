@@ -149,15 +149,16 @@
   #navbarReading .qnum.flagged{box-shadow:inset 0 0 0 2px var(--amber);}
   #navbarListening .spacer, #navbarReading .spacer, #navbarWriting .spacer{flex:1;}
   #navbarListening .btn, #navbarReading .btn, #navbarWriting .btn{padding:8px 18px;font-size:13px;flex-shrink:0;}
-  /* Writing: nút ở giữa thanh dưới */
-  #navbarWriting{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;overflow-x:visible;}
-  #navbarWriting .navCenter{display:flex;gap:10px;justify-content:center;align-items:center;}
-  #navbarWriting .btn.big{padding:11px 34px;font-size:15px;}
-  #navbarWriting .btn.submit{background:#1e9e5a;}
-  #navbarWriting .btn.submit:hover{background:#17804a;}
+  /* Nút nộp bài nằm giữa thanh dưới ở cả 3 phần (giữ màu xanh dương) */
+  #navbarListening, #navbarWriting{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;overflow-x:visible;}
+  #navbarListening .navCenter, #navbarWriting .navCenter{display:flex;gap:10px;justify-content:center;align-items:center;}
+  #navbarListening .btn.big, #navbarReading .btn.big, #navbarWriting .btn.big{padding:11px 34px;font-size:15px;}
   #navbarWriting .btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);}
   #navbarWriting .btn.secondary:hover{background:rgba(255,255,255,.12);}
-  @media(max-width:700px){ #navbarWriting{grid-template-columns:1fr;justify-items:center;} #navbarWriting .navRight{display:none;} }
+  /* Reading: hàng số câu trên, nút nộp căn giữa ở hàng dưới */
+  #navbarReading{flex-wrap:wrap;justify-content:center;overflow-x:visible;row-gap:8px;}
+  #navbarReading .navBreak{flex-basis:100%;height:0;}
+  @media(max-width:700px){ #navbarListening, #navbarWriting{grid-template-columns:1fr;justify-items:center;} #navbarListening .navRight, #navbarWriting .navRight{display:none;} }
   #navbarListening .info{color:#cdd8e6;font-size:12px;}
   #navbarWriting .navinfo{color:#cdd8e6;font-size:12px;}
   .flagBtn{border:none;background:transparent;cursor:pointer;font-size:13px;color:#c9ccd1;padding:0 2px;vertical-align:middle;}
