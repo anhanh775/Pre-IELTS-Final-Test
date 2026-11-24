@@ -177,8 +177,12 @@
 
   <div id="navbarWriting">
     <span class="navinfo" id="navInfo">Task 1: 0 words · Task 2: 0 words</span>
-    <div class="spacer"></div>
-    <button class="btn" onclick="submitWriting()">Submit test</button>
+    <div class="navCenter">
+      <button class="btn secondary" id="backToTask1Btn" style="display:none" onclick="switchTask(1)">← Task 1</button>
+      <button class="btn big" id="nextTaskBtn" onclick="switchTask(2)">Next: Task 2 →</button>
+      <button class="btn big submit" id="submitWritingBtn" style="display:none" onclick="confirmSubmitWriting()">Submit test</button>
+    </div>
+    <div class="navRight"></div>
   </div>
 </div>
 
@@ -187,7 +191,6 @@
   <h1>Test complete</h1>
   <p style="color:var(--ink-soft);font-size:14px;line-height:1.6;">Bạn đã hoàn thành đầy đủ 3 phần: Listening, Reading và Writing. Bài làm của bạn đã được lưu lại và gửi cho giáo viên. Giáo viên sẽ xem điểm và nhận xét bài viết của bạn, không hiển thị ở đây.</p>
   <p id="saveStatus" style="color:var(--ink-soft);font-size:13px;margin-top:18px;">Your result has been saved and sent to your teacher.</p>
-  <button class="btn secondary" style="margin-top:14px" onclick="downloadBackup()">Tải bản sao bài làm (.json)</button>
 </div>
 
 <!-- ===================== TEACHER VIEW ===================== -->
