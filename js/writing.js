@@ -8,6 +8,17 @@ function switchTask(n){
   document.querySelectorAll(".taskSection").forEach(el=>el.classList.remove("active"));
   $("task-"+n).classList.add("active");
   document.querySelectorAll("#taskTabs button").forEach(b=>b.classList.toggle("active", Number(b.dataset.task)===n));
+  // Task 1: hiện "Next: Task 2"; Task 2: hiện "← Task 1" + "Submit test"
+  $("nextTaskBtn").style.display = n===1 ? "" : "none";
+  $("backToTask1Btn").style.display = n===2 ? "" : "none";
+  $("submitWritingBtn").style.display = n===2 ? "" : "none";
+  const ta = $("answer"+n); if(ta) ta.focus();
+}
+function confirmSubmitWriting(){
+  const w1 = countWords($("answer1").value), w2 = countWords($("answer2").value);
+  let msg = "Bạn chắc chắn muốn nộp bài? Sau khi nộp sẽ không thể sửa.";
+  if(w1===0 || w2===0) msg = "⚠ " + (w1===0 ? "Task 1" : "Task 2") + " vẫn chưa có bài viết.\n\n" + msg;
+  if(confirm(msg)) submitWriting();
 }
 function updateWordCounts(){
   const w1 = countWords($("answer1").value), w2 = countWords($("answer2").value);

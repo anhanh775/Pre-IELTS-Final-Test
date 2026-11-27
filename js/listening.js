@@ -126,3 +126,49 @@ function submitListening(){
   $("listeningUI").style.display = "none";
   $("interimListening").style.display = "block";
 }
+
+
+/* ===== Thanh số câu (1–40) để chuyển nhanh giữa các câu / các Part ===== */
+const LISTEN_GROUPS = [[1,10],[11,20],[21,30],[31,40]];
+(function buildListenNav(){
+  const wrap = $("navQListening");
+  LISTEN_GROUPS.forEach(([start,end],gi)=>{
+    const g = document.createElement("div"); g.className = "navGroup";
+    for(let i=start;i<=end;i++){
+      const b = document.createElement("button");
+      b.className = "qnum"; b.textContent = i; b.id = "lnav-"+i;
+      b.onclick = ()=>{
+        viewListenPart(gi+1);   // chỉ đổi phần hiển thị, KHÔNG ảnh hưởng audio đang phát
+        setTimeout(()=>{
+          const m = META.L[i], t = m.type;
+          const el = t==="text"  ? document.querySelector(`input[data-lq="${i}"]`)
+                   : t==="radio" ? document.querySelector(`.checklist[data-lq="${i}"]`)
+                   : t==="btn"   ? document.querySelector(`.opt-row[data-lq="${i}"]`)
+                   : $(m.grp);
+          if(el) el.scrollIntoView({behavior:"smooth", block:"center"});
+        }, 50);
+      };
+      g.appendChild(b);
+    }
+    wrap.appendChild(g);
+  });
+})();
+
+// Đã trả lời chưa? Với câu "chọn 2 đáp án" (checkbox): câu đầu cần ≥1 lựa chọn, câu sau cần đủ 2.
+function listenAnswered(i){
+  const m = META.L[i];
+  if(m.type==="multi"){
+    const n = document.querySelectorAll(`#${m.grp} input:checked`).length;
+    const first = Object.keys(META.L).map(Number).filter(k=>META.L[k].type==="multi" && META.L[k].grp===m.grp).sort((a,b)=>a-b)[0];
+    return n >= (i===first ? 1 : 2);
+  }
+  return !!collect(META.L, "data-lq", i);
+}
+function updateListenNav(){
+  for(let i=1;i<=40;i++){
+    const nb = $("lnav-"+i);
+    if(nb) nb.classList.toggle("answered", listenAnswered(i));
+  }
+}
+function refreshListenNav(){ setTimeout(updateListenNav, 0); }
+["input","change","click"].forEach(ev=>document.addEventListener(ev, e=>{ if(e.target.closest("#listeningUI")) refreshListenNav(); }));

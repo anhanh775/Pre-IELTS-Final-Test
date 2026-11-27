@@ -48,7 +48,11 @@ READ_GROUPS.forEach(([start,end],gi)=>{
     g.appendChild(b);
   }
 });
-document.addEventListener("input", e=>{ if(e.target.matches('input[type=text][data-q]')) updateNavAnswered(); });
+// Cập nhật thanh số câu cho MỌI loại câu hỏi (điền từ, chọn A/B/C, radio True/False, checkbox chọn 2 đáp án)
+function refreshReadingNav(){ setTimeout(updateNavAnswered, 0); }
+document.addEventListener("input",  e=>{ if(e.target.closest("#readingUI")) refreshReadingNav(); });
+document.addEventListener("change", e=>{ if(e.target.closest("#readingUI")) refreshReadingNav(); });
+document.addEventListener("click",  e=>{ if(e.target.closest("#readingUI .checklist, #readingUI .opt-row")) refreshReadingNav(); });
 function updateNavAnswered(){
   for(let i=1;i<=40;i++){
     const nb = $("nav-"+i);

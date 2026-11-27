@@ -64,7 +64,9 @@ async function submitWriting(){
   /* ============ GỬI KẾT QUẢ VỀ GOOGLE SHEET ============ */
   // Dán URL Web App của Apps Script vào GOOGLE_SHEET_WEBHOOK_URL bên dưới sau khi deploy (xem hướng dẫn kèm theo).
   const GOOGLE_SHEET_WEBHOOK_URL = CONFIG.webhook;
-  if(GOOGLE_SHEET_WEBHOOK_URL && GOOGLE_SHEET_WEBHOOK_URL.indexOf("PASTE_YOUR") === -1){
+  if(!GOOGLE_SHEET_WEBHOOK_URL || GOOGLE_SHEET_WEBHOOK_URL.indexOf("PASTE_YOUR") !== -1){
+    console.error("CHƯA CẤU HÌNH WEBHOOK: js/config.js đang chạy trên site này vẫn là placeholder → kết quả KHÔNG được gửi về Google Sheet.");
+  } else {
     try{
       await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
         method: "POST",

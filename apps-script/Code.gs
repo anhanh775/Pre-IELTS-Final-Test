@@ -7,6 +7,25 @@
 */
 const SHEET_NAMES = { sum:'Tổng hợp', wri:'Writing', lis:'Listening chi tiết', rea:'Reading chi tiết' };
 
+// Nếu script KHÔNG được tạo từ Sheet (Tiện ích mở rộng → Apps Script), dán ID của Sheet vào đây
+// (ID là đoạn giữa /d/ và /edit trong URL của Google Sheet). Để trống nếu script gắn trực tiếp với Sheet.
+const SPREADSHEET_ID = '';
+
+function getSS_(){
+  const ss = SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  if(!ss) throw new Error('Không tìm thấy Google Sheet. Hãy điền SPREADSHEET_ID ở đầu file Code.gs.');
+  return ss;
+}
+
+// Ghi lỗi vào sheet "Log" để nhìn thấy ngay khi có sự cố
+function logError_(err, raw){
+  try{
+    const ss = getSS_();
+    const sh = ss.getSheetByName('Log') || ss.insertSheet('Log');
+    sh.appendRow([new Date(), String(err && err.stack || err), String(raw || '').slice(0, 2000)]);
+  }catch(e){}
+}
+
 function doGet(){ return ContentService.createTextOutput('Webhook OK'); }
 
 function doPost(e){
@@ -14,7 +33,7 @@ function doPost(e){
   lock.waitLock(30000);
   try{
     const r = JSON.parse(e.postData.contents);
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = getSS_();
     const when = new Date(r.submittedAt);
 
     getSheet_(ss, SHEET_NAMES.sum, ['Nộp lúc','Họ tên','Listening (/40)','Reading (/40)','Task 1 (từ)','Task 2 (từ)','Tổng thời gian (phút)'])
@@ -32,6 +51,9 @@ function doPost(e){
     detail_(ss, SHEET_NAMES.lis, r.listeningScore, r.listeningRows, r, when);
     detail_(ss, SHEET_NAMES.rea, r.readingScore, r.readingRows, r, when);
     return ContentService.createTextOutput('OK');
+  } catch(err){
+    logError_(err, e && e.postData && e.postData.contents);
+    return ContentService.createTextOutput('ERROR: ' + err);
   } finally { lock.releaseLock(); }
 }
 
